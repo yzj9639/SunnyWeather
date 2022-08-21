@@ -1,4 +1,4 @@
-package com.sunnuyweather.android
+package com.sunnyweather.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
