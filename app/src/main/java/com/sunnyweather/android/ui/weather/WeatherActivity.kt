@@ -1,8 +1,10 @@
 package com.sunnyweather.android.ui.weather
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,7 +13,9 @@ import androidx.lifecycle.observe
 import com.sunnyweather.android.R
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.model.getSky
+import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.forecast.*
+import kotlinx.android.synthetic.main.life_index.*
 import kotlinx.android.synthetic.main.now.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,6 +26,9 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val decorView = window.decorView
+        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        window.statusBarColor = Color.TRANSPARENT
         setContentView(R.layout.activity_weather)
 
 
@@ -75,7 +82,7 @@ class WeatherActivity : AppCompatActivity() {
             val skyIcon = view.findViewById(R.id.skyIcon) as ImageView
             val skyInfo = view.findViewById(R.id.skyInfo) as TextView
             val temperatureInfo = view.findViewById(R.id.temperatureInfo) as TextView
-            val simpleDataFormat = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
+            val simpleDataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             dateInfo.text = simpleDataFormat.format(skycon.date)
             temperatureInfo.text = "${temperature.max.toInt()}~${temperature.min.toInt()}℃"
 
@@ -86,7 +93,12 @@ class WeatherActivity : AppCompatActivity() {
             forecastLayout.addView(view)
         }
         //填充life_index.xml数据
-
+        val lifeIndex = daily.lifeIndex
+        coldRiskText.text = lifeIndex.coldRisk[0].desc
+        dressingText.text = lifeIndex.dressing[0].desc
+        ultraVioletText.text = "没有数据"
+        carWashingText.text = lifeIndex.carWashing[0].desc
+        weatherLayout.visibility = View.VISIBLE
     }
 
 
